@@ -14,7 +14,6 @@ async function connectToMongo(collectionName, callback){
 app.get("/api/employees", async (req, res) => {
     await connectToMongo('fx', async function (collection, client) {
         const employeesList = await collection.find().toArray();
-        console.log(employeesList[0].employees)
         client.close();
         res.json(employeesList[0].employees)
     })

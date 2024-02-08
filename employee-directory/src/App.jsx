@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react'
 import { getEmployees } from './getData'
-
+import {Table} from './Table'
 import './App.css'
 
 function App() {
-  const [employees, setEmployees] = useState([])
+  const [data, setData] = useState([])
 
   useEffect(() => {
     getEmployees()
-      .then(employees => setEmployees(employees))
+      .then(data => setData(data))
   }, []);
 
   return (
     <>
-      <div>
-        <h1>{employees.length}</h1>
-        </div>
+    {data.length ? 
+      <Table employees={data}></Table> : <h1> Loading....</h1> } 
     </>
   )
 }
