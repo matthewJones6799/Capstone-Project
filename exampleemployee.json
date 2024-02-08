@@ -1,5 +1,7 @@
 {
   "employee": "Michael Davis",
   "location":"Boston, Massachuessets",
-  "salary":52000
+  "salary":52000,
+  "job": "Data Engineer",
+  "phone_number": "860-874-2694"
 }
