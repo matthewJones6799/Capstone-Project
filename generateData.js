@@ -3,20 +3,19 @@ let fs = require('fs');
 
 function generateEmployees() {
     
-  let jobs = ["Data Engineer", "Data Scientist", "Building Security", "Custodial", "Software Engineer", "CyberSecurity", "HR", "Customer Support", "Finance", "Accounting"]
-  let locations = ["Hartford, Connecticut", "Bangalore, Maine", "Boston, Massachusetts", "New York City, New York"]
+  let jobs = ["IT", "Data Scientist", "Building Security", "Custodial", "Software Engineer", "CyberSecurity", "HR", "Customer Support", "Finance", "Accounting"]
+  let locations = ["Hartford, Connecticut", "San Francisco, California", "Topeka, Kansas", "Boston, Massachusetts", "New York City, New York"]
   let employees = [];
-  
-  jobName = faker.person.jobArea()
+
   for (let id = 1; id <= 1000; id++) {
     let firstName = faker.person.firstName();
     let lastName = faker.person.lastName();
     let phoneNumber = faker.phone.number('###-###-###');
     let location = locations[(Math.floor(Math.random() * locations.length))]
-    //let job = getRandomInt(8) == 8 ? 'HR' : jobName
     let job = jobs[(id%10)]
-    let salary = getSalary(job, location)
-    let isManager = id % 50 ? false : true
+    let isManager = id > 10 ? false : true
+    let salary = getSalary(job, location, isManager)
+ 
 
     employees.push({
       id: id,
@@ -28,37 +27,18 @@ function generateEmployees() {
       job: job,
       isManager: isManager
     });
-
-    if(id % 50 == 0) {
-        jobName = faker.person.jobArea();
-    }
   }
   return { employees: employees };
 }
 
-// function geneateMangers() {
+function getSalary(job, location, isManager) {
     
-//     let managers = [];
-//     for (let id = 1; id <= 50; id++) {
-//       let manager = 
-  
-//       employees.push({
-//         id: id,
-//         first_name: firstName,
-//         last_name: lastName,
-//         phoneNumber: phoneNumber,
-//         salary: salary,
-//         location: location,
-//         job: job
-//       });
-//     }
-//     return { employees: employees };
-//   }
+    let num = Math.floor(Math.random() * 10) + 51;
+    
+    if(isManager==true) {
+        num += 20
+    }
 
-function getSalary(job, location) {
-    //let multiplier = job == "HR" ? 10 : 1
-    let num = Math.floor(Math.random() * 10) + 1;
-    num += 50
     if((job == "Software Engineer" )||(job == "Data Engineer")||(job == "Data Scientist")||(job == "CyberSecurity")){
       num += 50
     }else if((job == "Custodial")||(job == "Building Security")||(job == "Custodial")){
