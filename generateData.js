@@ -13,8 +13,9 @@ function generateEmployees() {
     let phoneNumber = faker.phone.number('###-###-###');
     let location = locations[(Math.floor(Math.random() * locations.length))]
     let job = jobs[(id%10)]
-    let salary = getSalary(job, location)
     let isManager = id > 10 ? false : true
+    let salary = getSalary(job, location, isManager)
+ 
 
     employees.push({
       id: id,
@@ -30,10 +31,14 @@ function generateEmployees() {
   return { employees: employees };
 }
 
-function getSalary(job, location) {
-    //let multiplier = job == "HR" ? 10 : 1
-    let num = Math.floor(Math.random() * 10) + 1;
-    num += 50
+function getSalary(job, location, isManager) {
+    
+    let num = Math.floor(Math.random() * 10) + 51;
+    
+    if(isManager==true) {
+        num += 20
+    }
+
     if((job == "Software Engineer" )||(job == "Data Engineer")||(job == "Data Scientist")||(job == "CyberSecurity")){
       num += 50
     }else if((job == "Custodial")||(job == "Building Security")||(job == "Custodial")){
