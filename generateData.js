@@ -28,7 +28,7 @@ function generateEmployees() {
       isManager: isManager
     });
   }
-  return { employees: employees };
+  return employees;
 }
 
 function getSalary(job, location, isManager) {
@@ -63,4 +63,4 @@ module.exports = generateEmployees;
 
 let dataObj = generateEmployees();
 
-fs.writeFileSync('data.json', JSON.stringify(dataObj, null, '\t'));
+fs.writeFileSync('data2.json', JSON.stringify(dataObj, null, '\t'));
