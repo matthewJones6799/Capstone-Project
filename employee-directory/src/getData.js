@@ -1,7 +1,8 @@
-export async function getEmployees() {
-    const url = `/api/employees`;
+export async function getEmployees(searchTerm) {
+    const url = `/api/employees/${searchTerm}`;
     let employeesList = await fetch(url)
       .then((res) => res.json());
+      console.log(employeesList)
     return employeesList;
   }
 

@@ -11,22 +11,34 @@ async function connectToMongo(collectionName, callback){
     callback(collection, client);
 }
 
-app.get("/api/employees", async (req, res) => {
+app.get("/api/employees/:searchTerm?", async (req, res) => {
+    const searchTerm = req.params.searchTerm
+    console.log(searchTerm)
     await connectToMongo('employeeList', async function (collection, client) {
-        const employeesList = await collection.find().toArray();
+        var employeesList = []
+        if (searchTerm) {
+            employeesList = await collection.find({'first_name': searchTerm}).toArray();
+        } else {
+            employeesList = await collection.find().toArray();
+            console.log(employeesList)
+        }
+       
         client.close();
-        res.json(employeesList[0].employees)
+        res.json(employeesList)
     })
 });
 
 app.get("/api/manager/:id", async (req, res) => {
     const id = req.params.id
-    console.log("Changed")
    
     await connectToMongo('employeeList', async function (collection, client) {
         const employeeList = await collection.findOne({"id": +id});
-        client.close();
-        res.json(employeeList)
+        console.log(employeeList.job)
+        const otherManagers = await collection.find({'isManager': true}).toArray()
+        const managedEmployees = await collection.find({'job': employeeList.job, 'isManager': false}).toArray()
+        const otherEmployees = await collection.find({job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
+        
+        res.json({othermanagers:otherManagers, managedemployees: managedEmployees, otheremployees: otherEmployees} )
     })
 });
 

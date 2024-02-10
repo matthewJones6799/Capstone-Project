@@ -49,3 +49,14 @@ export function Table({employees}) {
     </div>
     )
 }
+
+export function TableHolder(props) {
+    return (
+        <div className="w-11/12 h-auto bg-gray-500 ">
+            <div className="flex gap-4">
+                <h1>{props.title}</h1>
+            </div>
+            {props.children}
+        </div>
+    )
+}
