@@ -23,7 +23,7 @@ function App() {
     <div className='w-full h-20 flex flex-wrap flex-row justify-between items-center align-middle'>
       <h3 className="font-bold">Employee Database</h3>
       <div className='gap-6 flex flex-row'>
-      <TextField getter={searchTerm} setter={setSearchTerm}></TextField>
+      <TextField placeholder="Search names" getter={searchTerm} setter={setSearchTerm}></TextField>
       <CustomButton buttonText="Salary Predictor" onClick={PrintData()}></CustomButton>
       </div>
     </div>
