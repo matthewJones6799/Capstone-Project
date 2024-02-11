@@ -17,7 +17,7 @@ app.get("/api/employees/:searchTerm?", async (req, res) => {
     await connectToMongo('employeeList', async function (collection, client) {
         var employeesList = []
         if (searchTerm) {
-            employeesList = await collection.find({'first_name': searchTerm}).toArray();
+            employeesList = await collection.find({'first_name':  searchTerm}).toArray();
         } else {
             employeesList = await collection.find().toArray();
             console.log(employeesList)
@@ -42,6 +42,19 @@ app.get("/api/manager/:id", async (req, res) => {
     })
 });
 
+app.get("/api/logindata/:firstname/:lastname", async (req, res) => {
+    const firstname = req.params.firstname
+    const lastname = req.params.lastname
+    console.log(req.params.firstname)
+    console.log(lastname)
+    await connectToMongo('employeeList', async function (collection, client) {
+        const employee = await collection.findOne({"first_name": firstname, "last_name": lastname});
+        console.log(employee)
+        res.json(employee)
+    })
+});
+
 const port = 4000
 console.log("Open a browser to http://localhost:"+port+" to view the application");
 app.listen(port);
+

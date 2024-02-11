@@ -2,37 +2,39 @@ import { CustomButton } from "./components/CustomButton";
 import { TextField } from "./components/TextField";
 import { useState } from "react";
 import { TableHolder } from "./Table";
+import { useNavigate } from "react-router-dom";
+import { fetchLoginData } from "./getData";
 
 function LoginPage() {
 
-   const loginValues = [
-    {
- //manager, not HR
- username: "TaliaBotsford",
- password: "password"
-    },
-    {
-        //manager, HR
-        username: "FranzTremblay",
-        password: "password"
-    },
-    {
-        username: "LawsonCartwright",
-        password: "password"
-    }
-]
+    const navigate = useNavigate();
 
-    const [username, setusername] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [password, setpassword] = useState("")
 
+    const navigateToPage = async () => {
+        let employeeInfo = await fetchLoginData(firstName, lastName)
+        console.log(employeeInfo)
+        console.log("DDLDLDLD")
+       if (employeeInfo.job == "HR"){
+        navigate("/login")
+       } else if (employeeInfo.isManager == true) {
+        navigate("/manager/2")
+       } else {
+        navigate("/employees")
+       }
+    }
+
     return (
-        <TableHolder classname="flex space-y-10">
-            <h2 className="font-bold">Login</h2>
+        <TableHolder classname="flex flex-row gap-80 space-y-80 flex-wrap">
+            <h2 className="font-bold text-lg">Login</h2>
             <h4>Log in to your account by inputting your username and password</h4>
 
-            <TextField placeholder="Username" getter={username} setter={setusername}></TextField>
+            <TextField placeholder="First Name" getter={firstName} setter={setFirstName}></TextField>
+            <TextField placeholder="Last Name" getter={lastName} setter={setLastName}></TextField>
             <TextField placeholder="Passsword" fieldType="password" getter={password} setter={setpassword}></TextField>
-            <CustomButton buttonText="Login"></CustomButton>
+            <CustomButton buttonText="Login" onClick={navigateToPage}></CustomButton>
         </TableHolder>
     )
 }
