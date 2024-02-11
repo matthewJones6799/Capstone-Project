@@ -1,3 +1,6 @@
+import { CustomButton } from "./components/CustomButton"
+import { useState } from "react"
+
 export function Table({employees}) {
     
     return (
@@ -51,12 +54,24 @@ export function Table({employees}) {
 }
 
 export function TableHolder(props) {
+    const [tableExpanded, setTableExpanded] = useState(true)
+
+    const handleTableExpand = () => {
+        setTableExpanded(tableExpanded => !tableExpanded)
+    }
+
+    var tableHolderCSS =  tableExpanded ? "h-auto" : "h-20"
+    var tableCSS = tableExpanded ? "visible" : "invisible"
+
     return (
-        <div className="w-11/12 h-auto bg-gray-100 p-12 rounded-md">
+        <div className={tableHolderCSS}>
             <div className="flex gap-4">
-                <h1>{props.title}</h1>
+                <h2>{props.title}</h2>
+                <CustomButton buttonText={tableExpanded ? "Collapse Table" : "Expand Table"} onClick={handleTableExpand}></CustomButton>
             </div>
+            <div className={tableCSS}>
             {props.children}
+            </div>
         </div>
     )
 }

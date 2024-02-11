@@ -33,12 +33,12 @@ app.get("/api/manager/:id", async (req, res) => {
    
     await connectToMongo('employeeList', async function (collection, client) {
         const employeeList = await collection.findOne({"id": +id});
-        console.log(employeeList.job)
+
         const otherManagers = await collection.find({'isManager': true}).toArray()
         const managedEmployees = await collection.find({'job': employeeList.job, 'isManager': false}).toArray()
         const otherEmployees = await collection.find({job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
         
-        res.json({othermanagers:otherManagers, managedemployees: managedEmployees, otheremployees: otherEmployees} )
+        res.send({othermanagers:otherManagers, employeesmanaged: managedEmployees, otheremployees: otherEmployees} )
     })
 });
 

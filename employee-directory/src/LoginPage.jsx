@@ -20,7 +20,7 @@ function LoginPage() {
        if (employeeInfo.job == "HR"){
         navigate("/login")
        } else if (employeeInfo.isManager == true) {
-        navigate("/manager/2")
+        navigate(`/manager/${employeeInfo.id}`)
        } else {
         navigate("/employees")
        }
