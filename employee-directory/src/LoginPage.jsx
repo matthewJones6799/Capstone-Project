@@ -4,8 +4,11 @@ import { useState } from "react";
 import { TableHolder } from "./Table";
 import { useNavigate } from "react-router-dom";
 import { fetchLoginData } from "./getData";
+import "./css/loginPage.css"
+import "./css/TextStyles.css"
+import "./css/CustomComponentStyles.css"
 
-function LoginPage() {
+export function LoginPage() {
 
     const navigate = useNavigate();
 
@@ -15,19 +18,12 @@ function LoginPage() {
 
     const navigateToPage = async () => {
         let employeeInfo = await fetchLoginData(firstName, lastName)
-        console.log(employeeInfo)
-        console.log("DDLDLDLD")
-       
-        if (employeeInfo.isManager == true) {
-        navigate(`/manager/${employeeInfo.id}`)
-       } else {
         navigate(`/employees/${employeeInfo.id}`)
-       }
     }
 
     return (
-        <div classname="flex flex-row gap-y-80 space-y-80 flex-wrap">
-            <h2 className="font-bold text-lg">Login</h2>
+        <div className="loginContainer">
+            <h2 id="largeTitle">Login</h2>
             <h4>Log in to your account by inputting your username and password</h4>
 
             <TextField placeholder="First Name" getter={firstName} setter={setFirstName}></TextField>
@@ -37,5 +33,3 @@ function LoginPage() {
         </div>
     )
 }
-
-export default LoginPage
