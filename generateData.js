@@ -62,4 +62,4 @@ module.exports = generateEmployees;
 
 let dataObj = generateEmployees();
 
-fs.writeFileSync('data.json', JSON.stringify(dataObj, null, '\t'));
+fs.writeFileSync('data2.json', JSON.stringify(dataObj, null, '\t'));
