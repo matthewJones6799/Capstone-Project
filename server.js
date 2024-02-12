@@ -11,9 +11,18 @@ async function connectToMongo(collectionName, callback){
     callback(collection, client);
 }
 
-app.get("/api/employees", async (req, res) => {
+app.get("/api/employees/:searchTerm?", async (req, res) => {
+    const searchTerm = req.params.searchTerm
+    console.log(searchTerm)
     await connectToMongo('employeeList', async function (collection, client) {
-        const employeesList = await collection.find().toArray();
+        var employeesList = []
+        if (searchTerm) {
+            employeesList = await collection.find({'first_name':  searchTerm}).toArray();
+        } else {
+            employeesList = await collection.find().toArray();
+            console.log(employeesList)
+        }
+       
         client.close();
         res.json(employeesList)
     })
@@ -21,15 +30,37 @@ app.get("/api/employees", async (req, res) => {
 
 app.get("/api/manager/:id", async (req, res) => {
     const id = req.params.id
-    console.log("Changed")
    
     await connectToMongo('employeeList', async function (collection, client) {
         const employeeList = await collection.findOne({"id": +id});
-        client.close();
-        res.json(employeeList)
+
+        const otherManagers = await collection.find({'isManager': true}).toArray()
+        const managedEmployees = await collection.find({'job': employeeList.job, 'isManager': false}).toArray()
+        const otherEmployees = await collection.find({job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
+        
+        res.send({othermanagers:otherManagers, employeesmanaged: managedEmployees, otheremployees: otherEmployees} )
+    })
+});
+
+app.get("/api/logindata/:firstname/:lastname", async (req, res) => {
+    const firstname = req.params.firstname
+    const lastname = req.params.lastname
+    await connectToMongo('employeeList', async function (collection, client) {
+        const employee = await collection.findOne({"first_name": firstname, "last_name": lastname});
+        console.log(employee)
+        res.json(employee)
+    })
+});
+
+app.get("/api/getCurrentEmployeeInfo/:id", async (req, res) => {
+    const id = req.params.id
+    await connectToMongo('employeeList', async function (collection, client) {
+        const employee = await collection.findOne({"id": +id});
+        res.json(employee)
     })
 });
 
 const port = 4000
 console.log("Open a browser to http://localhost:"+port+" to view the application");
 app.listen(port);
+
