@@ -20,7 +20,7 @@ app.get("/api/employees/:searchTerm?", async (req, res) => {
             employeesList = await collection.find({'first_name':  searchTerm}).toArray();
         } else {
             employeesList = await collection.find().toArray();
-            console.log(employeesList)
+            //console.log(employeesList)
         }
        
         client.close();
