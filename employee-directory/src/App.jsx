@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react'
 import { getEmployees, getEmployeeInfo } from './getData'
 import {Table, TableHolder} from './Table'
-
 import { CustomButton } from './components/CustomButton'
 import { TextField } from './components/TextField'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { CurrentEmployeeInfo } from './CurrentEmployeeInfo'
-import "./css/TextStyles.css"
-import "./css/CustomComponentStyles.css"
-import "./css/DetailPage.css"
-
-function PrintData() {
-  console.log("EHEKE")
-}
-import SalaryPrediction from './SalaryPrediction'
-
 
 function App() {
   const [data, setData] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [currentEmployeeInfo, setCurrentEmployeeInfo] = useState({})
+  
+  const navigate = useNavigate();
+
+  const goToSalaryPrediction = () => {
+      navigate(`/salaryPrediction`)
+  }
+  const logOutOfSite = () => {
+    navigate(`/login`)
+}
 
   let { id } = useParams();
 
@@ -38,15 +37,14 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
-    <h1>Sample page</h1>
-=======
 
     <div className='w-full h-20 flex flex-wrap flex-row justify-between items-center align-middle'>
-      <h3 className="font-bold">Employee Database</h3>
+    <CustomButton buttonText="Log Out" onClick={logOutOfSite}></CustomButton>
+    <h3 className="font-bold">Employee Database</h3>
       <div className='gap-6 flex flex-row'>
       <TextField placeholder="Search names" getter={searchTerm} setter={setSearchTerm}></TextField>
-      <CustomButton buttonText="Salary Predictor" onClick={PrintData()}></CustomButton>
+      <CustomButton buttonText="Salary Predictor" onClick={goToSalaryPrediction}></CustomButton>
+     
       </div>
     </div>
 <CurrentEmployeeInfo employee={currentEmployeeInfo}></CurrentEmployeeInfo>
@@ -54,13 +52,6 @@ function App() {
       {data.length ? 
       <Table showSalary={currentEmployeeInfo.job == "HR"} employees={data}></Table> : <h1> Loading....</h1> } 
 </TableHolder>
-
-    //<div>
-        //<SalaryPrediction />
-    //</div>
-    {/*{data.length ? 
-      <Table employees={data}></Table> : <h1> Loading....</h1> }*/}
->>>>>>> 6aebfe0a4271efe3288f9883744e49a3001dea8a
     </>
   )
 }
