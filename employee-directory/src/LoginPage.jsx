@@ -17,9 +17,8 @@ function LoginPage() {
         let employeeInfo = await fetchLoginData(firstName, lastName)
         console.log(employeeInfo)
         console.log("DDLDLDLD")
-       if (employeeInfo.job == "HR"){
-        navigate("/login")
-       } else if (employeeInfo.isManager == true) {
+       
+        if (employeeInfo.isManager == true) {
         navigate(`/manager/${employeeInfo.id}`)
        } else {
         navigate(`/employees/${employeeInfo.id}`)
