@@ -38,9 +38,9 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
+
     <h1>Sample page</h1>
-=======
+
 
     <div className='w-full h-20 flex flex-wrap flex-row justify-between items-center align-middle'>
       <h3 className="font-bold">Employee Database</h3>
@@ -60,7 +60,7 @@ function App() {
     //</div>
     {/*{data.length ? 
       <Table employees={data}></Table> : <h1> Loading....</h1> }*/}
->>>>>>> 6aebfe0a4271efe3288f9883744e49a3001dea8a
+
     </>
   )
 }
