@@ -4,9 +4,6 @@ import { useState } from "react";
 import { TableHolder } from "./Table";
 import { useNavigate } from "react-router-dom";
 import { fetchLoginData } from "./getData";
-import "./css/loginPage.css"
-import "./css/TextStyles.css"
-import "./css/CustomComponentStyles.css"
 
 export function LoginPage() {
 
@@ -22,14 +19,16 @@ export function LoginPage() {
     }
 
     return (
-        <div className="loginContainer">
-            <h2 id="largeTitle">Login</h2>
+        <div className="h-full w-screen">
+            <div className="flex flex-col space-y-4  align-items justify-center items-center">
+            <h2 className="font-bold text-lg">Login</h2>
             <h4>Log in to your account by inputting your username and password</h4>
 
             <TextField placeholder="First Name" getter={firstName} setter={setFirstName}></TextField>
             <TextField placeholder="Last Name" getter={lastName} setter={setLastName}></TextField>
             <TextField placeholder="Passsword" fieldType="password" getter={password} setter={setpassword}></TextField>
             <CustomButton buttonText="Login" onClick={navigateToPage}></CustomButton>
+        </div>
         </div>
     )
 }
