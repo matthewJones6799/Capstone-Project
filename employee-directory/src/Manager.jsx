@@ -11,7 +11,7 @@ function PrintData() {
   console.log("EHEKE")
 }
 
-function App() {
+function Manager() {
   const [managedEmployees, setManagedEmployees] = useState([])
   const [managers, setManagers] = useState([])
   const [otherEmployees, setOtherEmployees] = useState([])
@@ -22,7 +22,7 @@ function App() {
   let { id } = useParams();
 
   useEffect(() => {
-    getEmployeesForManager(id)
+    getEmployeesForManager(id, searchTerm)
       .then(data => 
         {setManagedEmployees(data.employeesmanaged),
         setManagers(data.othermanagers),
@@ -40,31 +40,31 @@ function App() {
 
   return (
     <>
-    <div className='w-full h-20 flex flex-wrap flex-row justify-between items-center align-middle'>
-      <h3 className="font-bold">Employee Database</h3>
-      <div className='gap-6 flex flex-row'>
-      {/* <TextField placeholder="Search names" getter={searchTerm} setter={setSearchTerm}></TextField> */}
+    <div className='detailContainer'>
+      <h3 id="largeTitle">Employee Database</h3>
+      <div className='rightnavbar'>
+      <TextField placeholder="Search names" getter={searchTerm} setter={setSearchTerm}></TextField>
       <CustomButton buttonText="Salary Predictor" onClick={PrintData()}></CustomButton>
       </div>
     </div>
     <CurrentEmployeeInfo employee={currentManagerInfo}></CurrentEmployeeInfo>
 
-<TableHolder title="Employees I Manage">
+<TableHolder title={currentManagerInfo.isManager ? 'Employees I Manage': `Other Employees in ${currentManagerInfo.job} department`}>
       {managedEmployees.length ? 
-      <Table showSalary={isInHR} employees={managedEmployees}></Table> : <h1> Loading....</h1> } 
+      <Table showSalary={isInHR} employees={managedEmployees}></Table> : <h1 id="largeTitle"> Loading....</h1> } 
 </TableHolder>
 
 <TableHolder title="Other Managers">
       {managers.length ? 
-      <Table showSalary={isInHR} employees={managers}></Table> : <h1> Loading....</h1> } 
+      <Table showSalary={isInHR} employees={managers}></Table> : <h1 id="largeTitle"> Loading....</h1> } 
 </TableHolder>
 
 <TableHolder title="All Other Employees">
       {otherEmployees.length ? 
-      <Table showSalary={isInHR} employees={otherEmployees}></Table> : <h1> Loading....</h1> } 
+      <Table showSalary={isInHR} employees={otherEmployees}></Table> : <h1 id="largeTitle"> Loading....</h1> } 
 </TableHolder>
     </>
   )
 }
 
-export default App
+export default Manager
