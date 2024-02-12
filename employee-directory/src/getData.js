@@ -20,3 +20,11 @@ export async function getEmployees(searchTerm) {
       console.log(loginInfo)
     return loginInfo;
   }
+
+  export async function getEmployeeInfo(id) {
+    const url = `/api/getCurrentEmployeeInfo/${id}`;
+    let loginInfo = await fetch(url)
+      .then((res) => res.json());
+      console.log(loginInfo)
+    return loginInfo;
+  }

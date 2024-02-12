@@ -1,7 +1,7 @@
 import { CustomButton } from "./components/CustomButton"
 import { useState } from "react"
 
-export function Table({employees}) {
+export function Table({employees, showSalary}) {
     
     return (
         <div className="relative overflow-x-auto">
@@ -14,9 +14,13 @@ export function Table({employees}) {
                     <th scope="col" className="px-6 py-4">
                         Phone Number
                     </th>
-                    <th scope="col" className="px-6 py-4">
+        
+                    {
+                        showSalary ? ( <th scope="col" className="px-6 py-4">
                         Salary
-                    </th>
+                    </th>) : null
+                    }
+                    
                     <th scope="col" className="px-6 py-4">
                         Job
                     </th>
@@ -35,9 +39,12 @@ export function Table({employees}) {
                     <td className="px-6 py-4">
                       {employee.phoneNumber}
                     </td>
-                    <td className="px-6 py-4">
-                      ${employee.salary}
-                    </td>
+                    {
+                        showSalary ? (<td className="px-6 py-4">
+                        ${employee.salary}
+                      </td>) : null
+                    }
+                    
                     <td className="px-6 py-4">
                       {employee.job}
                     </td>
@@ -53,24 +60,25 @@ export function Table({employees}) {
     )
 }
 
-export function TableHolder(props) {
+export function TableHolder({title, children}) {
     const [tableExpanded, setTableExpanded] = useState(true)
 
     const handleTableExpand = () => {
         setTableExpanded(tableExpanded => !tableExpanded)
     }
 
+    //tailwind is isnt dynamically compiled (its compiled every time a view renders) ao we have to use ternary operators outside of the classname, sigh
     var tableHolderCSS =  tableExpanded ? "h-auto" : "h-20"
     var tableCSS = tableExpanded ? "visible" : "invisible"
 
     return (
         <div className={tableHolderCSS}>
             <div className="flex gap-4">
-                <h2>{props.title}</h2>
+                <h2>{title}</h2>
                 <CustomButton buttonText={tableExpanded ? "Collapse Table" : "Expand Table"} onClick={handleTableExpand}></CustomButton>
             </div>
             <div className={tableCSS}>
-            {props.children}
+            {children}
             </div>
         </div>
     )

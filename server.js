@@ -45,11 +45,17 @@ app.get("/api/manager/:id", async (req, res) => {
 app.get("/api/logindata/:firstname/:lastname", async (req, res) => {
     const firstname = req.params.firstname
     const lastname = req.params.lastname
-    console.log(req.params.firstname)
-    console.log(lastname)
     await connectToMongo('employeeList', async function (collection, client) {
         const employee = await collection.findOne({"first_name": firstname, "last_name": lastname});
         console.log(employee)
+        res.json(employee)
+    })
+});
+
+app.get("/api/getCurrentEmployeeInfo/:id", async (req, res) => {
+    const id = req.params.id
+    await connectToMongo('employeeList', async function (collection, client) {
+        const employee = await collection.findOne({"id": +id});
         res.json(employee)
     })
 });

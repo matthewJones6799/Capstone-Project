@@ -22,12 +22,12 @@ function LoginPage() {
        } else if (employeeInfo.isManager == true) {
         navigate(`/manager/${employeeInfo.id}`)
        } else {
-        navigate("/employees")
+        navigate(`/employees/${employeeInfo.id}`)
        }
     }
 
     return (
-        <TableHolder classname="flex flex-row gap-80 space-y-80 flex-wrap">
+        <div classname="flex flex-row gap-y-80 space-y-80 flex-wrap">
             <h2 className="font-bold text-lg">Login</h2>
             <h4>Log in to your account by inputting your username and password</h4>
 
@@ -35,7 +35,7 @@ function LoginPage() {
             <TextField placeholder="Last Name" getter={lastName} setter={setLastName}></TextField>
             <TextField placeholder="Passsword" fieldType="password" getter={password} setter={setpassword}></TextField>
             <CustomButton buttonText="Login" onClick={navigateToPage}></CustomButton>
-        </TableHolder>
+        </div>
     )
 }
 
