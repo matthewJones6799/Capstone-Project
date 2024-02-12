@@ -6,6 +6,10 @@ import { CustomButton } from './components/CustomButton'
 import { TextField } from './components/TextField'
 import { useParams } from 'react-router-dom'
 import { CurrentEmployeeInfo } from './CurrentEmployeeInfo'
+import "./css/TextStyles.css"
+import "./css/CustomComponentStyles.css"
+import "./css/DetailPage.css"
+
 function PrintData() {
   console.log("EHEKE")
 }
@@ -32,19 +36,7 @@ function App() {
 
   return (
     <>
-    <div className='w-full h-20 flex flex-wrap flex-row justify-between items-center align-middle'>
-      <h3 className="font-bold">Employee Database</h3>
-      <div className='gap-6 flex flex-row'>
-      <TextField placeholder="Search names" getter={searchTerm} setter={setSearchTerm}></TextField>
-      <CustomButton buttonText="Salary Predictor" onClick={PrintData()}></CustomButton>
-      </div>
-    </div>
-<CurrentEmployeeInfo employee={currentEmployeeInfo}></CurrentEmployeeInfo>
-<TableHolder title="All Employees">
-      {data.length ? 
-      <Table showSalary={currentEmployeeInfo.job == "HR"} employees={data}></Table> : <h1> Loading....</h1> } 
-</TableHolder>
-
+    <h1>Sample page</h1>
     </>
   )
 }

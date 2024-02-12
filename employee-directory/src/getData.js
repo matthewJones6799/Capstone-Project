@@ -6,8 +6,8 @@ export async function getEmployees(searchTerm) {
     return employeesList;
   }
 
-  export async function getEmployeesForManager(id) {
-    const url = `/api/manager/${id}`;
+  export async function getEmployeesForManager(id, searchTerm) {
+    const url = `/api/manager/${id}/${searchTerm}`;
     let employeesManagedList = await fetch(url)
       .then((res) => res.json());
     return employeesManagedList;

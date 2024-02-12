@@ -28,16 +28,28 @@ app.get("/api/employees/:searchTerm?", async (req, res) => {
     })
 });
 
-app.get("/api/manager/:id", async (req, res) => {
+app.get("/api/manager/:id/:searchTerm?", async (req, res) => {
     const id = req.params.id
-   
+    const searchTerm = req.params.searchTerm
+
     await connectToMongo('employeeList', async function (collection, client) {
         const employeeList = await collection.findOne({"id": +id});
 
-        const otherManagers = await collection.find({'isManager': true}).toArray()
-        const managedEmployees = await collection.find({'job': employeeList.job, 'isManager': false}).toArray()
-        const otherEmployees = await collection.find({job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
+        var otherManagers = []
+        var managedEmployees = []
+        var otherEmployees = []
+        if (searchTerm) {
+            otherManagers = await collection.find({'first_name': searchTerm, 'isManager': true}).toArray()
+            managedEmployees = await collection.find({'first_name': searchTerm, 'job': employeeList.job, 'isManager': false}).toArray()
+            otherEmployees = await collection.find({'first_name': searchTerm, job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
+        } else {
+           
+         otherManagers = await collection.find({'isManager': true}).toArray()
+         managedEmployees = await collection.find({'job': employeeList.job, 'isManager': false}).toArray()
+         otherEmployees = await collection.find({job: { $ne: employeeList.job}, isManager: { $ne: true}}).toArray()
         
+        }
+
         res.send({othermanagers:otherManagers, employeesmanaged: managedEmployees, otheremployees: otherEmployees} )
     })
 });
